@@ -1,24 +1,24 @@
 package org.datausagetracing.integration.common.usage
 
-import java.util.*
+import org.datausagetracing.integration.common.usage.extractor.UsageExtractor
 
 class UsageFactory {
-    val processors = mutableListOf<Pair<Class<*>, Processor<in Any>>>()
+    val extractors = mutableListOf<Pair<Class<*>, UsageExtractor<in UsageContext>>>()
 
-    fun <T : Any> install(contextClass: Class<T>, processor: Processor<T>) {
-        processors.add(contextClass to (processor as Processor<in Any>))
+    fun <T : UsageContext> install(contextClass: Class<T>, usageExtractor: UsageExtractor<T>) {
+        extractors.add(contextClass to (usageExtractor as UsageExtractor<in UsageContext>))
     }
 
-    fun create(reference: UUID, context: Any, usageContext: UsageContext): Usage {
+    fun create(context: UsageContext): Usage {
         val usageBuilder = UsageBuilderImpl()
-        usageBuilder.reference = reference
+        usageBuilder.reference = context.reference
 
-        processors
+        extractors
             .asSequence()
             .filter { it.first.isAssignableFrom(context.javaClass) }
             .forEach { (_, processor) ->
                 processor.apply {
-                    usageBuilder.process(context, usageContext)
+                    usageBuilder.extract(context)
                 }
             }
 
@@ -26,5 +26,5 @@ class UsageFactory {
     }
 }
 
-inline fun <reified T : Any> UsageFactory.install(processor: Processor<T>) =
-    processors.add(T::class.java to (processor as Processor<in Any>))
+inline fun <reified T : UsageContext> UsageFactory.install(usageExtractor: UsageExtractor<T>) =
+    extractors.add(T::class.java to (usageExtractor as UsageExtractor<in UsageContext>))

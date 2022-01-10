@@ -1,5 +1,8 @@
-package org.datausagetracing.integration.common.usage
+package org.datausagetracing.integration.common.usage.extractor
 
+import org.datausagetracing.integration.common.usage.UsageBuilder
+import org.datausagetracing.integration.common.usage.UsageContext
+import org.datausagetracing.integration.common.usage.endpoint
 import java.net.InetAddress
 import java.util.regex.Pattern
 
@@ -11,12 +14,12 @@ import java.util.regex.Pattern
  *
  * @author p4skal
  */
-class HostnameBasedServerProcessor : Processor<Any> {
+class HostnameBasedServerUsageExtractor : UsageExtractor<UsageContext> {
     private val kubernetesEnvironmentVariable = "KUBERNETES_SERVICE_HOST"
     private val replicaSetPattern = Pattern.compile("^(.*)-[0-9a-z]{10}-[0-9a-z]{5}$")
     private val statefulSetPattern = Pattern.compile("^(.*)-\\d+$")
 
-    override fun UsageBuilder.process(context: Any, usageContext: UsageContext) {
+    override fun UsageBuilder.extract(context: UsageContext) {
         endpoint {
             val hostName = InetAddress.getLocalHost().hostName
 

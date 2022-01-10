@@ -16,7 +16,10 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    compileOnly("com.fasterxml.jackson.core:jackson-annotations:2.13.1")
+    compileOnly("com.fasterxml.jackson.core:jackson-databind:2.13.1")
+    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
+    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.1")
+    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.13.1")
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
 }
 

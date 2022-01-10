@@ -1,0 +1,9 @@
+users:
+  - user:
+      email: a
+      lastName: aa
+    p: false
+  - user:
+      email: b
+      lastName: bb
+    p: true

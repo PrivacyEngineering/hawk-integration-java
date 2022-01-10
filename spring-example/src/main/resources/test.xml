@@ -1,0 +1,16 @@
+<users>
+  <userWrapper>
+    <user>
+      <email>a</email>
+      <lastName>aa</lastName>
+    </user>
+    <p>false</p>
+  </userWrapper>
+  <userWrapper>
+    <user>
+      <email>b</email>
+      <lastName>bb</lastName>
+    </user>
+    <p>true</p>
+  </userWrapper>
+</users>

@@ -1,5 +1,7 @@
 package org.datausagetracing.integration.common.usage
 
+import java.util.*
+
 fun usage(builder: UsageBuilderImpl.() -> Unit) = UsageBuilderImpl().apply(builder).build()
 
 @DslMarker
@@ -41,3 +43,24 @@ fun UsageBuilder.xmlField(builder: FieldBuilder.() -> Unit) =
 
 fun UsageBuilder.cause(builder: CauseBuilder.() -> Unit) =
     CauseBuilder().apply(builder).build()
+
+
+val usage = usage {
+    reference = UUID.randomUUID()
+    endpoint {
+        protocol = "HTTP"
+        method = "POST"
+        path = "/api/user/create"
+    }
+    jsonField {
+        path = "$.[*].user.email"
+        count = 1
+    }
+    jsonField {
+        path = "$.[*].user.lastName"
+        count = 1
+    }
+    cause {
+        add("newsletterId", 32)
+    }
+}
