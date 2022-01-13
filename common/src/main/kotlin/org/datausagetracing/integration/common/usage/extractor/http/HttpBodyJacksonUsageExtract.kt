@@ -1,4 +1,4 @@
-package org.datausagetracing.integration.common.usage.extractor
+package org.datausagetracing.integration.common.usage.extractor.http
 
 import org.datausagetracing.integration.common.usage.UsageBuilder
 import org.datausagetracing.integration.common.usage.extractor.jackson.AbstractJacksonUsageExtractor

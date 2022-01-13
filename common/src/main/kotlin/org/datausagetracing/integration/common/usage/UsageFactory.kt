@@ -9,7 +9,7 @@ class UsageFactory {
         extractors.add(contextClass to (usageExtractor as UsageExtractor<in UsageContext>))
     }
 
-    fun create(context: UsageContext): Usage {
+    operator fun invoke(context: UsageContext): Usage {
         val usageBuilder = UsageBuilderImpl()
         usageBuilder.reference = context.reference
 

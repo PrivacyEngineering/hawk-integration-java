@@ -21,6 +21,7 @@ dependencies {
     compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.1")
     compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.13.1")
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+    compileOnly("org.slf4j:slf4j-api:1.8.0-beta4")
 }
 
 publishing {
