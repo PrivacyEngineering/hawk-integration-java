@@ -1,6 +1,6 @@
-package org.datausagetracing.integration.common.usage.extractor.http
+package org.datausagetracing.integration.common.usage.factory.http
 
-import org.datausagetracing.integration.common.usage.UsageContext
+import org.datausagetracing.integration.common.usage.factory.UsageContext
 
 interface HttpUsageContext : UsageContext {
     val headers: Map<String, List<String>>

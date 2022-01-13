@@ -1,7 +1,7 @@
-package org.datausagetracing.integration.common.usage.extractor.http
+package org.datausagetracing.integration.common.usage.factory.http
 
 import org.datausagetracing.integration.common.usage.UsageBuilder
-import org.datausagetracing.integration.common.usage.extractor.UsageExtractor
+import org.datausagetracing.integration.common.usage.factory.UsageExtractor
 import org.datausagetracing.integration.common.usage.propertiesField
 
 open class HttpHeaderUsageExtractor : UsageExtractor<HttpUsageContext> {

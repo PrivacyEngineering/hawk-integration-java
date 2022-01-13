@@ -1,4 +1,4 @@
-package org.datausagetracing.integration.common.usage
+package org.datausagetracing.integration.common.usage.factory
 
 import java.util.*
 

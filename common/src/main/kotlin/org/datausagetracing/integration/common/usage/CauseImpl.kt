@@ -2,10 +2,8 @@ package org.datausagetracing.integration.common.usage
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 
-open class CauseImpl(
-    @get:JsonAnyGetter override val map: Map<String, Any>
-) : MapBacked<Cause>(::CauseImpl), Cause {
-    override fun toString(): String {
-        return "CauseImpl(map=$map)"
-    }
+data class CauseImpl(
+    @get:JsonAnyGetter val map: Map<String, Any>
+) : Cause, Map<String, Any> by map {
+    override fun merge(other: Cause): Cause = CauseImpl(this + other)
 }

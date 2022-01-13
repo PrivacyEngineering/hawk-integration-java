@@ -2,11 +2,11 @@ package org.datausagetracing.integration.spring.web
 
 import org.apache.logging.log4j.LogManager
 import org.datausagetracing.integration.common.usage.Usage
-import org.datausagetracing.integration.common.usage.UsageFactory
-import org.datausagetracing.integration.common.usage.extractor.HostnameBasedServerUsageExtractor
-import org.datausagetracing.integration.common.usage.extractor.http.*
+import org.datausagetracing.integration.common.usage.factory.HostnameBasedServerUsageExtractor
+import org.datausagetracing.integration.common.usage.factory.http.*
 import org.datausagetracing.integration.common.usage.install
 import org.datausagetracing.integration.common.usage.processor.UsageProcessor
+import org.datausagetracing.integration.common.usage.usageFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.DispatcherServlet
@@ -23,13 +23,13 @@ import javax.servlet.http.HttpServletResponse
 @Component
 @ConditionalOnClass(DispatcherServlet::class)
 class WebUsageFilter(private val usageProcessor: UsageProcessor) : Filter {
-    private val requestUsageFactory = UsageFactory().apply {
+    private val requestUsageFactory = usageFactory {
         install(HostnameBasedServerUsageExtractor())
         install(HttpRequestEndpointUsageExtractor())
         install(HttpHeaderUsageExtractor())
         install(HttpBodyJacksonUsageExtract())
     }
-    private val responseUsageFactory = UsageFactory().apply {
+    private val responseUsageFactory = usageFactory {
         install(HttpHeaderUsageExtractor())
         install(HttpBodyJacksonUsageExtract())
         install(HttpResponseEndpointUsageExtractor())

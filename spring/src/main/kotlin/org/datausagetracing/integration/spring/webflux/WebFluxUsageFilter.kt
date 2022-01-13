@@ -1,13 +1,13 @@
 package org.datausagetracing.integration.spring.webflux
 
-import org.datausagetracing.integration.common.usage.UsageFactory
-import org.datausagetracing.integration.common.usage.extractor.HostnameBasedServerUsageExtractor
-import org.datausagetracing.integration.common.usage.extractor.http.HttpBodyJacksonUsageExtract
-import org.datausagetracing.integration.common.usage.extractor.http.HttpHeaderUsageExtractor
-import org.datausagetracing.integration.common.usage.extractor.http.HttpRequestEndpointUsageExtractor
-import org.datausagetracing.integration.common.usage.extractor.http.HttpResponseEndpointUsageExtractor
+import org.datausagetracing.integration.common.usage.factory.HostnameBasedServerUsageExtractor
+import org.datausagetracing.integration.common.usage.factory.http.HttpBodyJacksonUsageExtract
+import org.datausagetracing.integration.common.usage.factory.http.HttpHeaderUsageExtractor
+import org.datausagetracing.integration.common.usage.factory.http.HttpRequestEndpointUsageExtractor
+import org.datausagetracing.integration.common.usage.factory.http.HttpResponseEndpointUsageExtractor
 import org.datausagetracing.integration.common.usage.install
 import org.datausagetracing.integration.common.usage.processor.UsageProcessor
+import org.datausagetracing.integration.common.usage.usageFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.stereotype.Service
@@ -21,13 +21,13 @@ import java.util.*
 @Service
 @ConditionalOnClass(DispatcherHandler::class)
 class WebFluxUsageFilter(private val usageProcessor: UsageProcessor) : WebFilter {
-    private val requestUsageFactory = UsageFactory().apply {
+    private val requestUsageFactory = usageFactory {
         install(HostnameBasedServerUsageExtractor())
         install(HttpRequestEndpointUsageExtractor())
         install(HttpHeaderUsageExtractor())
         install(HttpBodyJacksonUsageExtract())
     }
-    private val responseUsageFactory = UsageFactory().apply {
+    private val responseUsageFactory = usageFactory {
         install(HttpHeaderUsageExtractor())
         install(HttpBodyJacksonUsageExtract())
         install(HttpResponseEndpointUsageExtractor())
@@ -41,18 +41,12 @@ class WebFluxUsageFilter(private val usageProcessor: UsageProcessor) : WebFilter
         // We can assume, that the request is always a HttpServletRequest
         processRequest(reference, exchange.request)
 
-        // TODO
+        // Intercept normal HttpServletResponse to cache the bytes of the body
+        val cachingResponse = CachingServerHttpResponseDecorator(exchange.response) {
+            processResponse(reference, this)
+        }
 
-//        // Intercept normal HttpServletResponse to cache the bytes of the body
-//        val cachingResponse = ContentCachingResponseWrapper(response as HttpServletResponse)
-//
-//        // Continue Application
-//        chain.doFilter(request, cachingResponse)
-//
-//        // Process response
-//        processResponse(reference, cachingResponse)
-
-        return chain.filter(exchange)
+        return chain.filter(exchange.mutate().response(cachingResponse).build())
     }
 
     private fun processRequest(reference: UUID, request: ServerHttpRequest) {
@@ -69,18 +63,18 @@ class WebFluxUsageFilter(private val usageProcessor: UsageProcessor) : WebFilter
         usageProcessor.processUsage(requestUsage)
     }
 
-//    private fun processResponse(reference: UUID, response: ContentCachingResponseWrapper) {
-//        // Create Usage from response
-//        val responseUsage = responseUsageFactory.invoke(
-//            JavaEEHttpResponseUsageContext(
-//                response,
-//                "response",
-//                reference,
-//                String(response.contentAsByteArray)
-//            )
-//        )
-//
-//        // Submit generated Usage
-//        usageProcessor.processUsage(responseUsage)
-//    }
+    private fun processResponse(reference: UUID, response: CachingServerHttpResponseDecorator) {
+        // Create Usage from response
+        val responseUsage = responseUsageFactory.invoke(
+            WebfluxHttpResponseUsageContext(
+                response,
+                "response",
+                reference,
+                response.content ?: ""
+            )
+        )
+
+        // Submit generated Usage
+        usageProcessor.processUsage(responseUsage)
+    }
 }

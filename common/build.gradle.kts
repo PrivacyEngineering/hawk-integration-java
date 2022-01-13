@@ -16,12 +16,14 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    testImplementation("org.hamcrest:hamcrest:2.2")
     compileOnly("com.fasterxml.jackson.core:jackson-databind:2.13.1")
     compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
     compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.1")
     compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.13.1")
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
     compileOnly("org.slf4j:slf4j-api:1.8.0-beta4")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 publishing {
@@ -35,4 +37,8 @@ publishing {
             from(components["java"])
         }
     }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

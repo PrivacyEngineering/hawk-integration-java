@@ -1,5 +1,10 @@
 package org.datausagetracing.integration.common.usage
 
+import org.datausagetracing.integration.common.usage.factory.UsageContext
+import org.datausagetracing.integration.common.usage.factory.UsageExtractor
+import org.datausagetracing.integration.common.usage.factory.UsageFactory
+import org.datausagetracing.integration.common.usage.factory.UsageFactoryBuilder
+
 fun usage(builder: UsageBuilderImpl.() -> Unit) = UsageBuilderImpl().apply(builder).build()
 
 @DslMarker
@@ -40,6 +45,10 @@ fun UsageBuilder.xmlField(builder: FieldBuilder.() -> Unit) =
     }
 
 fun UsageBuilder.cause(builder: CauseBuilder.() -> Unit) =
-    CauseBuilder().apply(builder).build()
+    cause(CauseBuilder().apply(builder).build())
 
-fun usageFactory(builder: UsageFactory.() -> Unit): UsageFactory = UsageFactory().also(builder)
+inline fun <reified T : UsageContext> UsageFactoryBuilder.install(usageExtractor: UsageExtractor<T>) =
+    extractors.add(T::class.java to (usageExtractor as UsageExtractor<in UsageContext>))
+
+fun usageFactory(builder: UsageFactoryBuilder.() -> Unit): UsageFactory =
+    UsageFactoryBuilder().apply(builder).build()

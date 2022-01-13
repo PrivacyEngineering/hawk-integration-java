@@ -1,4 +1,4 @@
-package org.datausagetracing.integration.common.usage.extractor.jackson
+package org.datausagetracing.integration.common.usage.factory.jackson
 
 import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.JsonPointer

@@ -2,10 +2,8 @@ package org.datausagetracing.integration.common.usage
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 
-open class EndpointImpl(
-    @get:JsonAnyGetter override val map: Map<String, Any>
-) : MapBacked<Endpoint>(::EndpointImpl), Endpoint {
-    override fun toString(): String {
-        return "EndpointImpl(map=$map)"
-    }
+data class EndpointImpl(
+    @get:JsonAnyGetter val map: Map<String, Any>
+) : Endpoint, Map<String, Any> by map {
+    override fun merge(other: Endpoint): Endpoint = EndpointImpl(this + other)
 }

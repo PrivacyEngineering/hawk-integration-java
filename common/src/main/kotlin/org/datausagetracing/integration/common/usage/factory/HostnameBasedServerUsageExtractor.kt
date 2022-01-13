@@ -1,7 +1,6 @@
-package org.datausagetracing.integration.common.usage.extractor
+package org.datausagetracing.integration.common.usage.factory
 
 import org.datausagetracing.integration.common.usage.UsageBuilder
-import org.datausagetracing.integration.common.usage.UsageContext
 import org.datausagetracing.integration.common.usage.endpoint
 import java.net.InetAddress
 import java.util.regex.Pattern

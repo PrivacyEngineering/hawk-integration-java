@@ -29,6 +29,7 @@ class WebClientUsageExporter : UsageExporter {
             .bodyValue(usages)
             .retrieve()
             .toBodilessEntity()
+            .toProcessor()
             .block(Duration.ofSeconds(30L))
     }
 }

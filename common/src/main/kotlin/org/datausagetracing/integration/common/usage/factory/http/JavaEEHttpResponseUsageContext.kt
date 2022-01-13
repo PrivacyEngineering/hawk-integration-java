@@ -1,4 +1,4 @@
-package org.datausagetracing.integration.common.usage.extractor.http
+package org.datausagetracing.integration.common.usage.factory.http
 
 import java.util.*
 import javax.servlet.http.HttpServletResponse

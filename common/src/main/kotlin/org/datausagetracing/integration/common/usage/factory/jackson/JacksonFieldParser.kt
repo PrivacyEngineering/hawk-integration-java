@@ -1,4 +1,4 @@
-package org.datausagetracing.integration.common.usage.extractor.jackson
+package org.datausagetracing.integration.common.usage.factory.jackson
 
 import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.JsonPointer
@@ -13,13 +13,14 @@ abstract class JacksonFieldParser(protected val jsonFactory: JsonFactory) {
         JsonToken.VALUE_FALSE
     )
 
-    open fun parse(content: String): Set<String> {
+    open fun parse(content: String): Map<String, Int> {
         val parser = jsonFactory.createParser(content)
-        val paths = mutableSetOf<String>()
+        val paths = mutableMapOf<String, Int>()
 
         while (parser.nextToken() != null) {
             if(parser.currentToken() in valueTokens) {
-                paths.add(convertToPath(parser.parsingContext.pathAsPointer()))
+                val path = convertToPath(parser.parsingContext.pathAsPointer())
+                paths.compute(path) { _, oldValue -> oldValue?.plus(1) ?: 1 }
             }
         }
 
