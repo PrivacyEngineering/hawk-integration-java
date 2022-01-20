@@ -1,15 +1,19 @@
 package org.datausagetracing.integration.common.usage.factory.http
 
+import org.datausagetracing.integration.common.usage.factory.Side
+import java.time.LocalDateTime
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 class JavaEEHttpRequestUsageContext(
     override val backed: HttpServletRequest,
-    override val phase: String,
-    override val reference: UUID
+    override val id: UUID,
+    override val timestamp: LocalDateTime
 ) : HttpRequestUsageContext {
+    override val side: Side = Side.SERVER
     override val method: String = backed.method
     override val path: String = backed.requestURI
+    override val remoteHost: String get() = backed.remoteHost
     override val protocol: String = backed.protocol
     override val headers: Map<String, List<String>> = backed.headerNames
         .asSequence()

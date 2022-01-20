@@ -1,8 +1,12 @@
 package org.datausagetracing.integration.common.usage.factory
 
+import java.time.LocalDateTime
 import java.util.*
 
 interface UsageContext {
-    val reference: UUID
-    val phase: String
+    val id: UUID
+    val side: Side
+    val phase: Phase
+    val timestamp: LocalDateTime
 }
+

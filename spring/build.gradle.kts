@@ -22,6 +22,8 @@ dependencies {
     implementation(kotlin("reflect"))
     compileOnly("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("net.bytebuddy:byte-buddy-dep:1.12.7")
+    implementation("net.bytebuddy:byte-buddy-agent:1.12.7")
     api(project(":common"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

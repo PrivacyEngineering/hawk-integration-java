@@ -1,5 +1,5 @@
 package org.datausagetracing.integration.common.usage
 
 interface Mergable<T> {
-    fun merge(other: T): T
+    fun merge(new: T): T
 }

@@ -1,4 +1,4 @@
-package org.datausagetracing.integration.common.usage.factory.jackson
+package org.datausagetracing.integration.common.usage.factory.extractor.jackson
 
 import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.JsonPointer
@@ -12,6 +12,8 @@ abstract class JacksonFieldParser(protected val jsonFactory: JsonFactory) {
         JsonToken.VALUE_TRUE,
         JsonToken.VALUE_FALSE
     )
+
+    abstract val name: String
 
     open fun parse(content: String): Map<String, Int> {
         val parser = jsonFactory.createParser(content)

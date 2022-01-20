@@ -1,18 +1,13 @@
 package org.datausagetracing.integration.common.usage
 
 @UsageDslMarker
-class EndpointBuilder {
+class InitiatorBuilder {
     private val map = mutableMapOf<String, Any>()
-    var id: String by map
     var host: String by map
-    var protocol: String by map
-    var method: String by map
-    var path: String by map
-    var status: String by map
 
     fun add(key: String, value: Any) {
         map[key] = value
     }
 
-    fun build(): Endpoint = EndpointImpl(map)
+    fun build(): Initiator = InitiatorImpl(map)
 }

@@ -10,8 +10,16 @@ fun usage(builder: UsageBuilderImpl.() -> Unit) = UsageBuilderImpl().apply(build
 @DslMarker
 annotation class UsageDslMarker
 
+fun UsageBuilder.metadata(builder: MetadataBuilder.() -> Unit) {
+    metadata(MetadataBuilder().apply(builder).build())
+}
+
 fun UsageBuilder.endpoint(builder: EndpointBuilder.() -> Unit) {
     endpoint(EndpointBuilder().apply(builder).build())
+}
+
+fun UsageBuilder.initiator(builder: InitiatorBuilder.() -> Unit) {
+    initiator(InitiatorBuilder().apply(builder).build())
 }
 
 fun UsageBuilder.field(
@@ -22,30 +30,30 @@ fun UsageBuilder.field(
 
 fun UsageBuilder.jsonField(builder: FieldBuilder.() -> Unit) =
     field {
-        type = "json"
+        format = "json"
         builder()
     }
 
 fun UsageBuilder.propertiesField(builder: FieldBuilder.() -> Unit) =
     field {
-        type = "properties"
+        format = "properties"
         builder()
     }
 
 fun UsageBuilder.yamlField(builder: FieldBuilder.() -> Unit) =
     field {
-        type = "yaml"
+        format = "yaml"
         builder()
     }
 
 fun UsageBuilder.xmlField(builder: FieldBuilder.() -> Unit) =
     field {
-        type = "xml"
+        format = "xml"
         builder()
     }
 
-fun UsageBuilder.cause(builder: CauseBuilder.() -> Unit) =
-    cause(CauseBuilder().apply(builder).build())
+fun UsageBuilder.tags(builder: TagsBuilder.() -> Unit) =
+    tags(TagsBuilder().apply(builder).build())
 
 inline fun <reified T : UsageContext> UsageFactoryBuilder.install(usageExtractor: UsageExtractor<T>) =
     extractors.add(T::class.java to (usageExtractor as UsageExtractor<in UsageContext>))

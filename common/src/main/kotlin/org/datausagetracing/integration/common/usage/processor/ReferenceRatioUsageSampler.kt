@@ -11,5 +11,5 @@ class ReferenceRatioUsageSampler(ratio: Double) : UsageSampler {
     }
 
     override fun shouldSample(usage: Usage): Boolean =
-        abs(usage.reference.mostSignificantBits) <= referenceUpperBound
+        abs(usage.id.mostSignificantBits) <= referenceUpperBound
 }

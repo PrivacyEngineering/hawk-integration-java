@@ -9,7 +9,7 @@ class UsageFactoryImpl(
 
     override operator fun invoke(context: UsageContext): Usage {
         val usageBuilder = UsageBuilderImpl()
-        usageBuilder.reference = context.reference
+        usageBuilder.id = context.id
 
         extractors
             .asSequence()
