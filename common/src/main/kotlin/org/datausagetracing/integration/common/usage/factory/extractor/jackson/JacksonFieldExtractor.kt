@@ -7,9 +7,9 @@ import org.datausagetracing.integration.common.usage.factory.extractor.FieldExtr
 open class JacksonFieldExtractor(
     protected val fieldParsers: List<JacksonFieldParser> = listOf(
         JsonJacksonFieldParser(),
-        PropertiesJacksonFieldParser(),
-        XmlJacksonFieldParser(),
-        YamlJacksonFieldParser()
+//        PropertiesJacksonFieldParser(),
+//        XmlJacksonFieldParser(),
+//        YamlJacksonFieldParser()
     )
 ) : FieldExtractor<String> {
     protected val valueTokens =
@@ -18,10 +18,11 @@ open class JacksonFieldExtractor(
     override fun extract(content: String): List<FieldExtractorResult> =
         fieldParsers.flatMap { parser ->
             try {
-                parser.parse(content)
-                    .map { FieldExtractorResult(parser.name, it.key, it.value) }
+                return@flatMap parser.parse(content).map {
+                    FieldExtractorResult(parser.name, it.key, it.value)
+                }
             } catch (throwable: Throwable) {
             }
-            emptyList()
+            return@flatMap emptyList()
         }
 }

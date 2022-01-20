@@ -9,8 +9,8 @@ import java.time.ZonedDateTime
 class MetadataUsageExtractor: UsageExtractor<UsageContext> {
     override fun UsageBuilder.extract(context: UsageContext) {
         metadata {
-            side = context.side.name.lowercase()
-            phase = context.phase.name.lowercase()
+            side = context.side.name
+            phase = context.phase.name
             timestamp(ZonedDateTime.now())
         }
     }

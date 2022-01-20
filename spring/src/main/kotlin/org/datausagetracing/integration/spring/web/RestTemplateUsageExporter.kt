@@ -16,6 +16,10 @@ class RestTemplateUsageExporter: UsageExporter {
     private var usageUrl: String = ""
 
     override fun export(usages: List<Usage>) {
-        restTemplate.postForLocation("$usageUrl/api/usages/batch", usages)
+        if(usages.size == 1) {
+            restTemplate.postForLocation("$usageUrl/api/usages", usages.first())
+        } else {
+            restTemplate.postForLocation("$usageUrl/api/usages/batch", usages)
+        }
     }
 }
