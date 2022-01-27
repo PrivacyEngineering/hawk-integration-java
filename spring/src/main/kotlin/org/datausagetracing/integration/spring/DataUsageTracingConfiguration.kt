@@ -23,8 +23,6 @@ open class DataUsageTracingConfiguration {
         usageSamplers: List<UsageSampler>,
         usageExporters: List<UsageExporter>
     ): UsageProcessor {
-        println("usageSamplers: $usageSamplers")
-        println("usageExporters: $usageExporters")
         return if(shouldBatch) {
             BatchingUsageProcessor(usageSamplers.first(), usageExporters.first())
         }  else {

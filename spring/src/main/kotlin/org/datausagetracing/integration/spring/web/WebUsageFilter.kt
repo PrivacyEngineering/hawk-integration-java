@@ -43,10 +43,6 @@ class WebUsageFilter(private val usageProcessor: UsageProcessor) : Filter {
     }
     private val logger = LogManager.getLogger(javaClass)
 
-    init {
-        println("ff")
-    }
-
     override fun doFilter(
         request: ServletRequest,
         response: ServletResponse,
