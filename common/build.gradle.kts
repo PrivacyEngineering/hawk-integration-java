@@ -24,9 +24,16 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
+tasks {
+    jar {
+        archiveFileName.set("common.jar")
+    }
+}
+
 publishing {
     repositories {
         maven {
+            name = "github"
             setUrl("https://maven.pkg.github.com/TUB-CNPE-TB/hawk-java-integration")
         }
     }

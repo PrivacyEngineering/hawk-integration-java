@@ -26,9 +26,16 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+tasks {
+    jar {
+        archiveFileName.set("spring.jar")
+    }
+}
+
 publishing {
     repositories {
         maven {
+            name = "github"
             setUrl("https://maven.pkg.github.com/TUB-CNPE-TB/hawk-java-integration")
         }
     }
