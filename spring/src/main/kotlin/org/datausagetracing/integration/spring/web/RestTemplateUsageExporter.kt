@@ -12,7 +12,7 @@ import org.springframework.web.servlet.DispatcherServlet
 @ConditionalOnClass(DispatcherServlet::class)
 class RestTemplateUsageExporter: UsageExporter {
     private val restTemplate = RestTemplate()
-    @Value("\${datausagetracing.usage.url:http://datausagetracing}")
+    @Value("\${hawk.usage.url:http://datausagetracing}")
     private var usageUrl: String = ""
 
     override fun export(usages: List<Usage>) {

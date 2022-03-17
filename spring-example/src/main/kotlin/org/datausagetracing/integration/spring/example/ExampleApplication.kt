@@ -1,11 +1,11 @@
 package org.datausagetracing.integration.spring.example
 
-import org.datausagetracing.integration.spring.EnableDataUsageTracing
+import org.datausagetracing.integration.spring.EnableHawk
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
+@EnableHawk
 @SpringBootApplication
-@EnableDataUsageTracing
 class ExampleApplication
 
 fun main(args: Array<String>) {
