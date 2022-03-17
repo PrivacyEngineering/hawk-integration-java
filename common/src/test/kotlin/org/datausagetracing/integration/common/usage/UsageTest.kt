@@ -2,12 +2,18 @@ package org.datausagetracing.integration.common.usage
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.time.ZonedDateTime
 
 
 class UsageTest {
     @Test
     fun `check if usage builder produces valid usage`() {
         val usage = usage {
+            metadata {
+                side = "server"
+                phase = "request"
+                timestamp(ZonedDateTime.now())
+            }
             endpoint {
                 host = "test"
                 protocol = "HTTP/1.1"
