@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan("org.datausagetracing.integration")
-open class DataUsageTracingConfiguration {
+class HawkConfiguration {
     private val logger = LogManager.getLogger(javaClass)
-    @Value("\${datausagetracing.usage.batch:true}")
+    @Value("\${hawk.usage.batch:true}")
     private var shouldBatch: Boolean = true
 
     init {
-        logger.info("Using Data Usage Tracing")
+        logger.info("Using Hawk Integration")
     }
 
     @Bean
