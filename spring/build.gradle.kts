@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "org.datausagetracing.integration"
-version = "1.0.4"
+version = "1.0.5"
 
 repositories {
     mavenCentral()
@@ -36,7 +36,7 @@ publishing {
     repositories {
         maven {
             name = "github"
-            setUrl("https://maven.pkg.github.com/TUB-CNPE-TB/hawk-integration-java")
+            setUrl("https://maven.pkg.github.com/PrivacyEngineering/hawk-integration-java")
         }
     }
     publications {
