@@ -15,7 +15,7 @@ The idea of the Java Integration is to intercept the traffic of the application 
 atomic
 data references (Usages) and sample / batch / export them to the Hawk Service.
 The benefit of using the Java Integration is that you can track encrypted traffic or in the future
-even traffic to external api's.
+even traffic to external APIs.
 
 ## Spring
 
