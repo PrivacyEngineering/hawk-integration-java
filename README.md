@@ -77,7 +77,7 @@ There are the following options:
 |--------------------------|---------------------------|---------------------------|------------------------------------------------------|
 | hawk.usage.url           | HAWK_USAGE_URL            | `http://datausagetracing` | The URL of the Hawk Service                          |
 | hawk.usage.batch         | HAWK_USAGE_BATCH          | `true`                    | Buffers usages and sends them in one large request   |
-| hawk.usage.sampler.ratio | HAWK_USAGE_SAMPLER_RATION | `1.0`                     | Percent of Usage's to send. 1.0 = all, 0.0 = nothing |
+| hawk.usage.sampler.ratio | HAWK_USAGE_SAMPLER_RATIO | `1.0`                     | Percent of Usage's to send. 1.0 = all, 0.0 = nothing |
 
 For details, see [Common Section](#common).
 
